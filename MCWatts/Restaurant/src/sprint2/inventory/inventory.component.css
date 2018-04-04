@@ -1,0 +1,11 @@
+th, td {
+  border: .1rem solid black;
+
+  width: 10rem;
+}
+.Special {
+  width: initial;
+}
+.Special2 {
+  width: .00001rem;
+}

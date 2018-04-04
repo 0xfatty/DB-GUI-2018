@@ -1,0 +1,144 @@
+<h1 style="text-align:center;">Welcome Chef</h1>
+<br>
+<br>
+<br>
+
+<div *ngIf="groups.length == 0">
+  <h2 style="text-align:center;">You have no Food Groups!</h2>
+  <h2 style="text-align:center;">Add some to help organize your restaurant</h2>
+</div>
+<div *ngIf="groups.length != 0">
+  <table class = "table">
+    <thead>
+      <tr>
+        <td>Groups</td>
+        <td style="border:initial">
+          <button class="btn-info" onclick="$('#AddGroup').modal('show');">Add Group</button>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let g of groups">
+        <td>{{g.type}}</td>
+        <table class = "table">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Price per Pound</td>
+              <td>Units in Stock</td>
+
+                <button class="btn-info" (click)="setType(g)" onclick="$('#AddFood').modal('show');">Add</button>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of g.items">
+
+              <td>
+                {{f.name}}
+              </td>
+              <td>
+                {{f.price | currency}}
+              </td>
+              <td>
+                {{f.amount}}
+              </td>
+
+                <button class="btn-info" (click)="setFood(f)" onclick="$('#EditFood').modal('show');">Edit</button>
+
+
+                <button class="btn-info" (click)="removeFood(f, g)">X</button>
+
+
+            </tr>
+          </tbody>
+        </table>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="modal fade" id="AddGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title" id="exampleModalLabel">Add Group</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="Name" class="col-form-label">Group Name</label>
+            <br>
+            <input type="text" [(ngModel)]="group.type" name="Name" id="Name" style="min-width:20em;">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addGroup();" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="AddFood" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title" id="exampleModalLabel">Add Food to {{food.type}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="Name" class="col-form-label">Name</label>
+            <br>
+            <input type="text" [(ngModel)]="food.name" name="Name" id="Name" style="min-width:20em;">
+          </div>
+          <div class="form-group">
+            <label for="Price" class="col-form-label">Price</label>
+            <br>
+            <input type="text" [(ngModel)]="food.price" name="Price" id="Price" style="min-width:20em;">
+          </div>
+          <div class="form-group">
+            <label for="Units" class="col-form-label">Units</label>
+            <br>
+            <input type="text" [(ngModel)]="food.amount" name="Units" id="Units" style="min-width:20em;">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addFood();" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="EditFood" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h5 class="modal-title" id="exampleModalLabel">Add Food to {{food.type}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="Name" class="col-form-label">Update Amount</label>
+            <br>
+            <input type="text" [(ngModel)]="food.amount" name="Name" id="Name" style="min-width:20em;">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
