@@ -1,6 +1,9 @@
-class Restuarant {
+export class Restuarant {
+
+  link?: string;
   name?: string;
   style?: string;
-  address?: string;
+  location?: string;
   position?: number;
+
 }

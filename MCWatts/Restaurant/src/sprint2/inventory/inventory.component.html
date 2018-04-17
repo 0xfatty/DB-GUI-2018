@@ -5,10 +5,11 @@
 
 <div *ngIf="groups.length == 0">
   <h2 style="text-align:center;">You have no Food Groups!</h2>
-  <h2 style="text-align:center;">Add some to help organize your restaurant</h2>
+  <h2 style="text-align:center;">Add some to help organize your restaurant!</h2>
+  <h2 style="text-align:center;"><button  class="btn-info" onclick="$('#AddGroup').modal('show');">Add Group</button></h2>
 </div>
 <div *ngIf="groups.length != 0">
-  <table class = "table">
+  <table class="table">
     <thead>
       <tr>
         <td>Groups</td>
@@ -20,14 +21,15 @@
     <tbody>
       <tr *ngFor="let g of groups">
         <td>{{g.type}}</td>
-        <table class = "table">
+        <table class="table">
           <thead>
             <tr>
               <td>Name</td>
               <td>Price per Pound</td>
               <td>Units in Stock</td>
 
-                <button class="btn-info" (click)="setType(g)" onclick="$('#AddFood').modal('show');">Add</button>
+              <button class="btn-info" (click)="setType(g)" onclick="$('#AddFood').modal('show');">Add</button>
+              <button class="btn-info" (click)="removeGroup(g)">X</button>
 
             </tr>
           </thead>
@@ -44,10 +46,10 @@
                 {{f.amount}}
               </td>
 
-                <button class="btn-info" (click)="setFood(f)" onclick="$('#EditFood').modal('show');">Edit</button>
+              <button class="btn-info" (click)="setFood(f)" onclick="$('#EditFood').modal('show');">Edit</button>
 
 
-                <button class="btn-info" (click)="removeFood(f, g)">X</button>
+              <button class="btn-info" (click)="removeFood(f, g)">X</button>
 
 
             </tr>

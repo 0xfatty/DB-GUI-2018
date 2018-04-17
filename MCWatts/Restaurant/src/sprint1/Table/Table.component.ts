@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import {Restuarant} from '../../app/domain/modules/restuarant';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-Table',

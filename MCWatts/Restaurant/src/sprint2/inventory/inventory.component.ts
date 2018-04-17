@@ -2,6 +2,8 @@ import {
   Component,
   OnInit
 } from '@angular/core';
+import { FoodGroup } from '../../app/domain/modules/foodGroup';
+import { Food } from '../../app/domain/modules/food';
 
 @Component({
   selector: 'app-inventory',
@@ -116,6 +118,13 @@ export class InventoryComponent implements OnInit {
   }
   public setFood(f) {
    this.food = f;
+  }
+  public removeGroup(g) {
+    for (let i = 0; i < this.groups.length; i++) {
+      if (this.groups[i] === g) {
+        this.groups.splice(i, 1);
+      }
+    }
   }
 
 

@@ -12,7 +12,7 @@
 
 <div class="tab-content col-8">
   <div class="tab-pane fade show active" id="fall" role="tabpanel" aria-labelledby="home-tab">
-    <!-- Class Table Fall -->
+    <!-- Table -->
     <table class="table table-striped">
       <br>
       <thead *ngIf="restNum!==0">
@@ -34,7 +34,12 @@
 
       <div *ngIf="restNum!==0">
       <tr class="table-primary"  >
-        <tr *ngFor="let r of list"> <td  id="name{{r.name}}" [(ngModel)]="r.name">{{r.name}} </td> <td  id="style{{r.style}}" >{{r.style}}</td> <td id="address{{r.address}}" >{{r.address}}</td> <td><button (click)="deleteR(r)">X</button></td> <td><button  (click)="save(r)" onclick="$('#myModal').modal('show');">Edit Resturant</button></td> </tr>
+        <tr *ngFor="let r of list">
+          <td  id="name{{r.name}}" [(ngModel)]="r.name">{{r.name}} </td>
+          <td  id="style{{r.style}}" >{{r.style}}</td> <td id="address{{r.address}}" >{{r.address}}</td>
+           <td><button (click)="deleteR(r)">X</button></td>
+           <td><button  (click)="save(r)" onclick="$('#myModal').modal('show');">Edit Resturant</button></td>
+          </tr>
 
 
     </div>
@@ -77,4 +82,8 @@
       </div>
     </div>
   </div>
+
+
+
+
 </div>
