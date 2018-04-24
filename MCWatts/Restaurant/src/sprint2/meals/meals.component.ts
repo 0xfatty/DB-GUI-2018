@@ -1,5 +1,7 @@
+import { AccountRepostitory } from './../../app/domain/account-info-repository.service.';
 import { Component, OnInit } from '@angular/core';
 import { Meal } from '../../app/domain/modules/meal';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-meals',
@@ -9,15 +11,21 @@ import { Meal } from '../../app/domain/modules/meal';
 export class MealsComponent implements OnInit {
   public menu: Meal[];
   public thisMeal: Meal;
-  constructor() { }
+  public id: string;
+  public name: string;
+  constructor(private accountRepo: AccountRepostitory,
+    private activedRoute: ActivatedRoute,
+    private router: Router ) { }
 
   ngOnInit() {
-    this.menu = [ {name: 'Chicken Parmesan', price: 15, ingredients: 'Chicken and Parmesan Cheese', amountSold: 100},
- {name: 'Spaghetti and Meatballs', price: 12, ingredients: 'Pasta and Ground Beef', amountSold: 150},
-{name: 'Cesar Salad', price: 9, ingredients: 'Lettuce, Parmesan Cheese, Anchovies', amountSold: 300},
- {name: 'Spaghetti and Red Sauce', price: 7, ingredients: 'Pasta and Ragu', amountSold: 200},
-  ];
-    console.log(this.menu);
+    this.name = localStorage.getItem('name');
+    this.activedRoute.params.subscribe((params: any) => {
+      this.id = params.id;
+
+    this.accountRepo.getMenu(this.id).subscribe(data => {
+      this.menu = data;
+    });
+  });
   }
   public setMeal(m) {
     this.thisMeal = m;

@@ -1,3 +1,6 @@
+import { Review } from './modules/review';
+import { Meal } from './modules/meal';
+import { FoodGroup } from './modules/foodGroup';
 import { Restuarant } from './modules/user-Restaurant';
 import {catchError} from 'rxjs/operators';
 import {
@@ -7,6 +10,8 @@ import {
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../domain/modules/user';
+import { Food } from './modules/food';
+import { Info } from './modules/info';
 
 @Injectable()
 export class AccountRepostitory {
@@ -31,25 +36,133 @@ export class AccountRepostitory {
       catchError(this.handleException)
     );
   }
-  public getRestuarants(userName: String, key: String): Observable<Restuarant[]> {
-   //  body: new Http({'authKey': `${key}`);
-    return this.httpClient.get(`${this.endPoint}/`, this.httpOptions).pipe(
+  public getRestuarants(idNum: string): Observable<Restuarant[]> {
+
+    return this.httpClient.get(`${this.endPoint}/getRest/${idNum}`, this.httpOptions).pipe(
       catchError(this.handleException)
     );
   }
+
+  public addChefResturant(idNum: string, newRest: Restuarant) {
+    return this.httpClient.post(`${this.endPoint}/newRest/${idNum}`, newRest, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public getFoodGroups( restID: string): Observable<Food[]> {
+    return this.httpClient.get(`${this.endPoint}/getGroup/${restID}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+    // Dear Michael you have to rebuild the subarrays for the atual groups because andrew smellz
+  }
+
+  public deleteFoodGroup(restId: string, groupToDelte: FoodGroup) {
+    return this.httpClient.post(`${this.endPoint}/deleteGroup/${restId}`, groupToDelte, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public deleteFood(idNum: string, foodToDelte: Food) {
+    return this.httpClient.post(`${this.endPoint}/deleteFood/${idNum}`, foodToDelte, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public getRestCity( city: string): Observable<Restuarant[]> {
+    return this.httpClient.get(`${this.endPoint}/getRestByCity/${city}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+  public getRestZip( zip: Number): Observable<Restuarant[]> {
+    return this.httpClient.get(`${this.endPoint}/getRestByZip/${zip}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+  public getRestName( name: string): Observable<Restuarant[]> {
+    return this.httpClient.get(`${this.endPoint}/getRestByName/${name}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public addFood(idNum: string, newFood: Food) {
+    return this.httpClient.post(`${this.endPoint}/newIngredient/${idNum}`, newFood, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public addMeal(idNum: string, menuItem: Meal) {
+    return this.httpClient.post(`${this.endPoint}/newFood/${idNum}`, menuItem, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public deleteMeal(idNum: string, menuItem: Meal) {
+    return this.httpClient.post(`${this.endPoint}/deleteMeal2/${idNum}`, menuItem, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public getMenu( restID: string): Observable<Meal[]> {
+    return this.httpClient.get(`${this.endPoint}/getMenu/${restID}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+  public getRest( userID: string): Observable<Info[]> {
+    return this.httpClient.get(`${this.endPoint}/getUserFollows/${userID}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+  );
 }
-// post to post new restuants to list:  Restuarant
+public addRest( userID: string, rest: Restuarant) {
+  return this.httpClient.post(`${this.endPoint}/addRest/${userID}`, rest,  this.httpOptions).pipe(
+    catchError(this.handleException)
+);
+}
+public removeRest( userID: string, rest: Restuarant): Observable<Restuarant[]> {
+  return this.httpClient.post(`${this.endPoint}/deleteRest/${userID}`, rest,  this.httpOptions).pipe(
+    catchError(this.handleException)
+);
+}
 
-// get to get inventory:  FoodGroup[]
+public addReview (restId: string, rating: Review) {
+  return this.httpClient.post(`${this.endPoint}/addReview/${restId}`, rating, this.httpOptions).pipe(
+    catchError(this.handleException)
+  );
+}
+public changeFoodGroupName(idNum: string, editedFood: FoodGroup) {
+  return this.httpClient.post(`${this.endPoint}/updateGroupName/${idNum}`, editedFood, this.httpOptions).pipe(
+    catchError(this.handleException)
+  );
+}
 
-// post to update inventory: FoodGroup
 
-// post to update group: Food
 
-// delete to remove inventory: FoodGroup
 
-// delete to remove inventory: Food
+ // Dear Michael casey is a punk ass buster, add logic so if a food group is left empty it is not saved, figure it out you punk ass buster
 
-// Post to get meals for resturant: Meal[]
+  public updateFood(idNum: string, editedFood: Food) {
+    return this.httpClient.post(`${this.endPoint}/updateFood/${idNum}`, editedFood, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
 
-// Post to get user restaurant list: Restuarant[]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+

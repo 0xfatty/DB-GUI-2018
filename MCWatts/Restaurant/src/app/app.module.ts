@@ -1,3 +1,4 @@
+import { Sprint4Module } from './../sprint4/sprint4.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AccountRepostitory } from './domain/account-info-repository.service.';
 import { Sprint1Module } from './../sprint1/sprint1.module';
@@ -15,9 +16,11 @@ import { Sprint3Module } from '../sprint3/sprint3.module';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
+
 
 ],
   imports: [
@@ -25,6 +28,7 @@ import { Sprint3Module } from '../sprint3/sprint3.module';
     Sprint1Module,
     Sprint2Module,
     Sprint3Module,
+    Sprint4Module,
     RouterModule.forRoot([]),
     HttpClientModule,
   ],

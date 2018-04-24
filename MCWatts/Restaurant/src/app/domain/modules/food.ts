@@ -6,4 +6,8 @@ export class Food {
   deliveryDate?: Date;
   expirationDate?: Date;
   group?: string;
+  ingGroup?: string;
+  ingredientAmt?: number;
+  ingredientEXP?: Date;
+  ingredientName?: string;
 }

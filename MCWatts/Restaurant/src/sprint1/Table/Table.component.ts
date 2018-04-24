@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {Restuarant} from '../../app/domain/modules/restuarant';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+// import {Restuarant} from '../../app/domain/modules/restuarant';
+import {
+  Restuarant
+} from '../../app/domain/modules/user-Restaurant';
+import {
+  AccountRepostitory
+} from '../../app/domain/account-info-repository.service.';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-Table',
@@ -8,40 +17,70 @@ import {Restuarant} from '../../app/domain/modules/restuarant';
 })
 export class TableComponent implements OnInit {
 
-  constructor() { }
-public newRestuarant: Restuarant;
-public list: Restuarant[];
-public restNum: number;
+  constructor(private accountRepo: AccountRepostitory) {}
+  public newRestuarant: Restuarant;
+  public list: Restuarant[];
+  public restNum: number;
+  public name: String;
   ngOnInit() {
-    this.list = [];
-    this.restNum = 0;
+    this.name = localStorage.getItem('name');
     this.newRestuarant = {};
+    this.accountRepo.getRestuarants(localStorage.getItem('authkey')).subscribe(data => {
+      this.newRestuarant = data[0];
+      this.list = data;
+      this.list.forEach(curr => {
+        curr.desc = curr.description;
+        curr.picture = curr.restIMGLink;
+        curr.news = curr.restNews;
+        curr.link = curr.restLink;
+      });
+
+    });
+
+
   }
-public onAddCourseClick() {
-    if (this.newRestuarant.position === undefined) {
-    this.newRestuarant.position = this.restNum;
-    this.list.push(this.newRestuarant);
-    this.restNum++;
-    } else {
-      this.list[this.newRestuarant.position] = this.newRestuarant;
+  public onAddCourseClick() {
+    if (!this.newRestuarant.news) {
+      this.newRestuarant.news = 'None';
     }
 
+    this.newRestuarant.desc = this.newRestuarant.description;
+    this.newRestuarant.picture = this.newRestuarant.restIMGLink;
+    this.newRestuarant.news = this.newRestuarant.restNews;
+    this.newRestuarant.link = this.newRestuarant.restLink;
+    this.accountRepo.addRest(localStorage.getItem('authKey'), this.newRestuarant);
+
+
+    this.accountRepo.getRestuarants(localStorage.getItem('authkey')).subscribe(data => {
+
+      this.list = data;
+      this.list.forEach(curr => {
+        curr.desc = curr.description;
+        curr.picture = curr.restIMGLink;
+        curr.news = curr.restNews;
+        curr.link = curr.restLink;
+      });
+    });
     this.newRestuarant = {};
 
-    console.log(this.list);
+  }
+  public update() {
 
+  }
 
-}
-public deleteR(r) {
-  for (let i = 0; i < this.list.length; i++) {
-    if (this.list[i] === r) {
-      this.list.splice(i, 1);
-      this.restNum--;
+  public clear() {
+    this.newRestuarant = {};
+  }
+  public deleteR(r) {
+    for (let i = 0; i < this.list.length; i++) {
+      if (this.list[i] === r) {
+        this.list.splice(i, 1);
+        this.restNum--;
+      }
     }
   }
-}
-public save(r) {
-  this.newRestuarant = r;
-}
+  public save(r) {
+    this.newRestuarant = r;
+  }
 
 }

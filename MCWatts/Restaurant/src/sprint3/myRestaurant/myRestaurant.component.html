@@ -1,13 +1,14 @@
-<h1 style="text-align:center;">Welcome User</h1>
+<div *ngIf="restuarants">
+<h1 style="text-align:center;">Welcome {{name}}</h1>
 <h1 style="text-align:center;">Select a Restaurant for info:</h1>
 <div class="container">
   <div class="row">
     <div *ngFor="let r of restuarants" class="col-4">
       <div class="card" style="width: 18rem;">
-        <img class="card-img-top" style = " height: 15rem;"src={{r.picture}} alt="Restaurant Image">
+        <img class="card-img-top" style = " height: 15rem;"src={{r.restIMGLink}} alt="Restaurant Image">
         <div class="card-body">
-          <h5 class="card-title">{{r.name}}</h5>
-          <p class="card-text">{{r.des}}</p>
+          <h5 class="card-title">{{r.restName}}</h5>
+          <p class="card-text">{{r.description}}</p>
           <button class="btn btn-primary" (click)="setRestaurant(r)" onclick="$('#myModal').modal('show');">More Info</button>
         </div>
         <br>
@@ -26,15 +27,16 @@
           </button>
         </div>
         <div class="modal-body">
-          <h5>{{myRestaurant.name}}</h5>
-          <p>{{myRestaurant.des}}</p>
+          <h5>{{myRestaurant.restName}}</h5>
+          <p>{{myRestaurant.description}}</p>
           <br>
-          <p>{{myRestaurant.news}}</p>
+          <p>{{myRestaurant.restNews}}</p>
           <br>
-          <a href={{myRestaurant.link}}>{{myRestaurant.name}}'s Homepage</a>
+          <a href={{myRestaurant.restLink}}>{{myRestaurant.restName}}'s Homepage</a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
+  </div>

@@ -1,19 +1,19 @@
 export class Restuarant {
-  constructor(name, style, address, des, picture, link, news) {
-    this.name = name;
 
-    this.location = address;
-    this.des = des;
-    this.picture = picture;
-    this.link = link;
-    this.news = news;
-  }
 
-  name?: string;
-
-  location?: string;
-  des?: string;
+  restName?: string;
+  zipCode?: number;
+  city?: string;
+  restLocation?: string;
+  desc?: string;
   picture?: string;
   link?: string;
   news?: string;
+  idrestaurant?: string;
+  position?: number;
+  restType?: string;
+  description?: string;
+  restIMGLink?: string;
+  restNews?: string;
+  restLink?: string;
 }
