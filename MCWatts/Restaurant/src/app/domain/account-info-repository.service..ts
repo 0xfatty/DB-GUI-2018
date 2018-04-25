@@ -42,8 +42,20 @@ export class AccountRepostitory {
       catchError(this.handleException)
     );
   }
+  public getRestuarantFromID(idNum: string): Observable<Restuarant> {
 
-  public addChefResturant(idNum: string, newRest: Restuarant) {
+    return this.httpClient.get(`${this.endPoint}/getRestaurantFromID/${idNum}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+  public getUserRestuarants(idNum: string): Observable<Restuarant[]> {
+
+    return this.httpClient.get(`${this.endPoint}/getUserFollows/${idNum}`, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+
+  public addChefResturant(idNum: string, newRest: Restuarant): Observable<Restuarant> {
     return this.httpClient.post(`${this.endPoint}/newRest/${idNum}`, newRest, this.httpOptions).pipe(
       catchError(this.handleException)
     );
@@ -56,13 +68,13 @@ export class AccountRepostitory {
     // Dear Michael you have to rebuild the subarrays for the atual groups because andrew smellz
   }
 
-  public deleteFoodGroup(restId: string, groupToDelte: FoodGroup) {
+  public deleteFoodGroup(restId: string, groupToDelte: FoodGroup): Observable<FoodGroup> {
     return this.httpClient.post(`${this.endPoint}/deleteGroup/${restId}`, groupToDelte, this.httpOptions).pipe(
       catchError(this.handleException)
     );
   }
 
-  public deleteFood(idNum: string, foodToDelte: Food) {
+  public deleteFood(idNum: string, foodToDelte: Food): Observable<Food> {
     return this.httpClient.post(`${this.endPoint}/deleteFood/${idNum}`, foodToDelte, this.httpOptions).pipe(
       catchError(this.handleException)
     );
@@ -84,7 +96,7 @@ export class AccountRepostitory {
     );
   }
 
-  public addFood(idNum: string, newFood: Food) {
+  public addFood(idNum: string, newFood: Food): Observable<Food> {
     return this.httpClient.post(`${this.endPoint}/newIngredient/${idNum}`, newFood, this.httpOptions).pipe(
       catchError(this.handleException)
     );
@@ -102,7 +114,7 @@ export class AccountRepostitory {
     );
   }
 
-  public getMenu( restID: string): Observable<Meal[]> {
+  public getMenu( restID: number): Observable<Meal[]> {
     return this.httpClient.get(`${this.endPoint}/getMenu/${restID}`, this.httpOptions).pipe(
       catchError(this.handleException)
     );
@@ -112,7 +124,7 @@ export class AccountRepostitory {
       catchError(this.handleException)
   );
 }
-public addRest( userID: string, rest: Restuarant) {
+public addRest( userID: string, rest: Restuarant): Observable<Restuarant> {
   return this.httpClient.post(`${this.endPoint}/addRest/${userID}`, rest,  this.httpOptions).pipe(
     catchError(this.handleException)
 );
@@ -139,13 +151,22 @@ public changeFoodGroupName(idNum: string, editedFood: FoodGroup) {
 
  // Dear Michael casey is a punk ass buster, add logic so if a food group is left empty it is not saved, figure it out you punk ass buster
 
-  public updateFood(idNum: string, editedFood: Food) {
+  public updateFood(idNum: string, editedFood: Food): Observable<Food> {
     return this.httpClient.post(`${this.endPoint}/updateFood/${idNum}`, editedFood, this.httpOptions).pipe(
       catchError(this.handleException)
     );
   }
 
-
+  public updateRest(idNum: string, rest: Restuarant): Observable<Restuarant> {
+    return this.httpClient.post(`${this.endPoint}/updateRestInfo/${idNum}`, rest, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
+  public deleteRest(idNum: string, rest: Restuarant): Observable<Restuarant>  {
+    return this.httpClient.post(`${this.endPoint}/deleteRestaurant/${idNum}`, rest, this.httpOptions).pipe(
+      catchError(this.handleException)
+    );
+  }
 
 
 

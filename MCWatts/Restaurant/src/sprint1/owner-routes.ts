@@ -5,11 +5,11 @@ import { LoginComponent } from './Login/Login.component';
 
 export const OWNER_ROUTES: Route[] = [
   {
-    path: 'sprint1/Login',
+    path: 'Login',
     component: LoginComponent
   },
   {
-    path: 'sprint1/Table',
+    path: 'Table',
     component: TableComponent
   }
 ];

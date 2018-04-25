@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
 
     this.accountRepo.check(this.user).subscribe(data => {
-
+      console.log(data);
       if (data.reply) {
        alert(data);
      } else {

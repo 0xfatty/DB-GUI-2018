@@ -8,19 +8,19 @@ import { SearchComponent } from './search/search.component';
 
 
 
-export const CHEF_ROUTES: Route[] = [
+export const CHEF_R: Route[] = [
   {
-    path: 'sprint4/calendar/:id',
+    path: 'calendar/:id',
     component: CalenderComponent,
     pathMatch: 'full'
   },
   {
-    path: 'sprint4/search/:id',
+    path: 'search',
     component: SearchComponent,
     pathMatch: 'full'
   },
   {
-    path: 'sprint4/discover/:id',
+    path: 'discover',
     component: DiscoverComponent,
     pathMatch: 'full'
   },

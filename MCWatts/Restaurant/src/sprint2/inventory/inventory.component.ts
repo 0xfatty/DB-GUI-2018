@@ -31,17 +31,22 @@ export class InventoryComponent implements OnInit {
   ngOnInit() {
     this.name = localStorage.getItem('name');
     this.activedRoute.params.subscribe((params: any) => {
-      this.id = params.id;
+      this.id = params.restID;
+
+      this.makeSubGroups();
     });
-    this.makeSubGroups();
+
+
 
     this.group = new FoodGroup();
     this.food = new Food();
   }
   public removeFood(f, g) {
     console.log(f);
-    this.accountRepo.deleteFood(this.id, f);
-    this.makeSubGroups();
+    this.accountRepo.deleteFood(this.id, f).subscribe(data => {
+      this.makeSubGroups();
+    });
+
   }
   public addGroup() {
     this.groups.push(this.group);
@@ -50,19 +55,36 @@ export class InventoryComponent implements OnInit {
   }
   public setType(g) {
     this.food.group = g.type;
+    this.food.ingGroup = g.type;
 
   }
   public addFood() {
-    this.accountRepo.addFood(this.id, this.food);
-    this.food = {};
-    this.makeSubGroups();
+    console.log('Here');
+    console.log(this.food);
+    this.food.ingredientEXP = this.food.expirationDate;
+    this.accountRepo.addFood(this.id, this.food).subscribe(data => {
+      console.log(data);
+      this.food = {};
+      this.makeSubGroups();
+    });
+
   }
   public setFood(f) {
     this.food = f;
   }
+  public update() {
+    this.accountRepo.updateFood(this.id, this.food).subscribe(data => {
+      console.log(data);
+      this.makeSubGroups();
+      this.food = {};
+    });
+  }
   public removeGroup(g) {
-    this.accountRepo.deleteFoodGroup(this.id, g);
-    this.makeSubGroups();
+    console.log('Here');
+    g.items.forEach(item => {
+      this.removeFood(item, g);
+    });
+
   }
 private makeSubGroups() {
   this.accountRepo.getFoodGroups(this.id).subscribe(data => {

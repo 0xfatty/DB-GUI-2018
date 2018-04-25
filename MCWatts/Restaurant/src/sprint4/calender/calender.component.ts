@@ -61,7 +61,7 @@ export class CalenderComponent implements OnInit {
           ]
         });
       }
-      if(this.dates.length === 3) {
+      if (this.dates.length === 3) {
         $('#calendar').fullCalendar({
           // put your options and callbacks here
           height: 10,
@@ -86,7 +86,7 @@ export class CalenderComponent implements OnInit {
           ]
         });
       }
-      if(this.dates.length === 2) {
+      if (this.dates.length === 2) {
         $('#calendar').fullCalendar({
           // put your options and callbacks here
           height: 10,

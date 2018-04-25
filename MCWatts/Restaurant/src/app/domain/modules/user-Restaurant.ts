@@ -16,4 +16,5 @@ export class Restuarant {
   restIMGLink?: string;
   restNews?: string;
   restLink?: string;
+  restID?: string;
 }

@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 
 export const USER_ROUTES: Route[] = [
   {
-    path: 'sprint3/userRestaurants',
+    path: 'userRestaurants',
     component: MyRestaurantComponent,
   },
 ];

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Sprint4Component } from './sprint4.component';
 
 import { RouterModule } from '@angular/router';
-import { CHEF_ROUTES } from '../sprint4/chef-routes';
+import { CHEF_R } from '../sprint4/chef-routes';
 import { FormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { DiscoverComponent } from './discover/discover.component';
@@ -13,7 +13,7 @@ import { DiscoverComponent } from './discover/discover.component';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(CHEF_ROUTES),
+    RouterModule.forChild(CHEF_R),
     FormsModule,
   ],
   declarations: [

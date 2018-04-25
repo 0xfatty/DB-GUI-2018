@@ -22,18 +22,17 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
 
     this.name = localStorage.getItem('name');
-    this.activedRoute.params.subscribe((params: any) => {
-      this.id = params.id;
-
-
-  });
+    this.id = localStorage.getItem('authkey');
     this.myRestaurant = new Restuarant();
   }
   public setRestaurant(r) {
     this.myRestaurant = r;
   }
   public save() {
-    this.accountRepo.addRest(this.id, this.myRestaurant);
+    console.log(this.myRestaurant);
+    this.accountRepo.addRest(this.id, this.myRestaurant).subscribe(data => {
+      console.log(data);
+    });
   }
 
   public citySearch() {

@@ -34,7 +34,7 @@
 
           </tr>
           <tr *ngFor="let r of list">
-            <td  id="name{{r.restName}}" >{{r.restName}} </td>
+            <td  id="name{{r.restName}}" ><a routerLink='../inventory/{{r.idrestaurant}}'>{{r.restName}} </a></td>
             <td id="type{{r.restType}}" >{{r.restType}}</td>
             <td id="loc{{r.restLocation}}" >{{r.restLocation}}</td>
             <td id="city{{r.city}}" >{{r.city}}</td>
@@ -155,22 +155,22 @@
           <div class="form-group">
             <label for="Description" class="col-form-label">Description</label>
             <br>
-            <input type="text" [(ngModel)]="newRestuarant.description" name="Description" id="Description" style="min-width:20em;">
+            <input type="text" [(ngModel)]="newRestuarant.desc" name="Description" id="Description" style="min-width:20em;">
           </div>
           <div class="form-group">
             <label for="Link" class="col-form-label">Link</label>
             <br>
-            <input type="text" [(ngModel)]="newRestuarant.restLink" name="Link" id="Link" style="min-width:20em;">
+            <input type="text" [(ngModel)]="newRestuarant.link" name="Link" id="Link" style="min-width:20em;">
           </div>
           <div class="form-group">
             <label for="Picture" class="col-form-label">Picture</label>
             <br>
-            <input type="text" [(ngModel)]="newRestuarant.restIMGLink" name="Picture" id="Picture" style="min-width:20em;">
+            <input type="text" [(ngModel)]="newRestuarant.picture" name="Picture" id="Picture" style="min-width:20em;">
           </div>
           <div class="form-group">
             <label for="News" class="col-form-label">News</label>
             <br>
-            <textarea col = "30" type="text" [(ngModel)]="newRestuarant.restNews" name="News" id="News" style="min-width:20em;"></textarea>
+            <textarea col = "30" type="text" [(ngModel)]="newRestuarant.news" name="News" id="News" style="min-width:20em;"></textarea>
           </div>
         </div>
         <div class="modal-footer">
