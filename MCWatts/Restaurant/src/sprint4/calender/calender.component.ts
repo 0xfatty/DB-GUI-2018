@@ -30,7 +30,291 @@ export class CalenderComponent implements OnInit {
           this.dates.push(new Events(items.ingredientName, items.ingredientEXP));
         });
         this.nums = this.dates.length;
-
+        if(this.dates.length === 10) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[5].title}`,
+                start  : `${this.dates[5].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[6].title}`,
+                start  : `${this.dates[6].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[7].title}`,
+                start  : `${this.dates[7].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[8].title}`,
+                start  : `${this.dates[8].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[9].title}`,
+                start  : `${this.dates[9].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
+        if(this.dates.length === 9) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[5].title}`,
+                start  : `${this.dates[5].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[6].title}`,
+                start  : `${this.dates[6].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[7].title}`,
+                start  : `${this.dates[7].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[8].title}`,
+                start  : `${this.dates[8].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
+        if(this.dates.length === 8) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[5].title}`,
+                start  : `${this.dates[5].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[6].title}`,
+                start  : `${this.dates[6].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[7].title}`,
+                start  : `${this.dates[7].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
+        if(this.dates.length === 7) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[5].title}`,
+                start  : `${this.dates[5].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[6].title}`,
+                start  : `${this.dates[6].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
+        if(this.dates.length === 6) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[5].title}`,
+                start  : `${this.dates[5].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
+        if(this.dates.length === 5) {
+          $('#calendar').fullCalendar({
+            // put your options and callbacks here
+            height: 10,
+            contentHeight: 600,
+            events:
+            [
+              {
+                title  : `${this.dates[0].title}`,
+                start  : `${this.dates[0].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[1].title}`,
+                start  : `${this.dates[1].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[2].title}`,
+                start  : `${this.dates[2].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[3].title}`,
+                start  : `${this.dates[3].start}`,
+                allDay: true
+              },
+              {
+                title  : `${this.dates[4].title}`,
+                start  : `${this.dates[4].start}`,
+                allDay: true
+              }
+            ]
+          });
+        }
         if(this.dates.length === 4) {
         $('#calendar').fullCalendar({
           // put your options and callbacks here
