@@ -1,0 +1,63 @@
+<div *ngIf="this.id">
+  <form name="form" #form="ngForm" novalidate>
+    <div class="form-group row">
+      <label for="searchForRestaurant" class="form-label col-md-12">Search for restaurant</label>
+      <div class="col-md-11 col-12">
+        <input [(ngModel)]="search" class="form-control col-12" name="searchForRestaurant" id='searchForRestaurant' placeholder="by city/zip/restaurant"  required>
+      </div>
+      <div class="col-md-1 col-12 reset-padding">
+        <button class="btn btn-info" (click)="searchForRestaurant()" type="button">Search</button>
+      </div>
+    </div>
+  </form>
+<!-- 
+  <form class='d-none'>
+    <label for="city">Search by City</label>
+    <input [(ngModel)]="search" name="searchCity" id="city">
+    <button (click)="citySearch()">Search</button>
+  </form>
+  <form class='d-none'>
+      <label for="zip">Search by Zip</label>
+    <input [(ngModel)]="search" name="searchZip" id="zip">
+    <button (click)="zipSearch()">Search</button>
+  </form>
+  <form class='d-none'>
+      <label for="city">Search by Name</label>
+    <input [(ngModel)]="search" name="searchName" id="city">
+    <button (click)="nameSearch()">Search</button>
+  </form> -->
+</div>
+<div *ngIf="restaurants">
+  <h1 style="text-align:center;">Welcome {{name}},</h1>
+  <h1 style="text-align:center;">Select a Restaurant for info:</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 restaurant" *ngFor="let restaurant of restaurants">
+          <div class="card">
+              <div class="alert" role="alert" style="min-height: 300px; margin-bottom: 0.5rem;">
+                  <div class="text-center" style="min-height: 200px;">
+                    <a class="" href="/restaurant/{{restaurant.id}}">
+                      <img src="{{restaurant.imageName}}" class="rounded mx-auto d-block" style="max-width: 160px; max-height: 200px;" alt="{{restaurant.name}}" />
+                    </a>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <div class="float-right">
+                          <h4><span class="badge badge-pill badge-danger">{{restaurant.rate}}</span></h4>
+                        </div>
+                    </div>  
+                  </div>
+                  <div style="min-height: 29px;">
+                    <a class="" href="/restaurant/{{restaurant.id}}">
+                      <b>{{restaurant.name}}</b>
+                    </a>
+                  </div>
+                  <!-- <button type="button" class="btn btn-info form-control form-group" (click)="goToRestaurantDetails($event, restaurant.id)">Restaurant Detail</button> -->
+                  <a class="btn btn-primary follow-button {{restaurant.isFollowing == 1 ? 'unfollow' : 'follow'}}" (click)="followOrUnfollow($event, restaurant)">{{restaurant.isFollowing === 1 ? "Unfollow" : "Follow"}}</a>
+                </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+  
