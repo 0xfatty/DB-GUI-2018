@@ -1,0 +1,57 @@
+﻿<app-navigation>
+</app-navigation>
+
+<!-- content  -->
+<div class="row col-12 col-md-12 main-content">
+	<div class="col-12 col-md-9">
+		<!-- main app container -->
+		<app-alert></app-alert>
+		<router-outlet></router-outlet>
+
+	</div>
+	<div class="col-12 col-md-3">
+		<div class="card" style="width: 100%;">
+			<img class="card-img-top" src="./assets/imgs/restaurant.png" alt="Card image cap">
+			<div class="card-body">
+				<h5 class="card-title">Restaurant Category</h5>
+				<p class="card-text">Click below to view the all restaurant</p>
+				<a [routerLink]="['/restaurant']" class="btn btn-primary btn-block">View All</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- credits -->
+<div class="text-center">
+	<p>
+		<a href="http://cse3345" target="_top">GUI 2018</a>
+	</p>
+	<p>
+		<a href="http://cse3345" target="_top">CSE 3345</a>
+	</p>
+</div>
+
+
+<!-- Container for sidebar(s) + page content -->
+<ng-sidebar-container style="height: 100vh;">
+
+	<!-- A sidebar -->
+	<ng-sidebar [(opened)]="_opened" position="right">
+		<ul>
+			<li>
+				<a [routerLink]="['/login']" class="btn btn-link">Login</a>
+			</li>
+			<li>
+				<a [routerLink]="['/register']" class="btn btn-link">Register</a>
+			</li>
+			<li>
+				<a [routerLink]="['/inventory']" class="btn btn-link">Inventory</a>
+			</li>
+		</ul>
+	</ng-sidebar>
+
+	<!-- Page content -->
+	<div ng-sidebar-content>
+		<!-- <button (click)="_toggleSidebar()">Toggle sidebar</button> -->
+
+	</div>
+</ng-sidebar-container>
