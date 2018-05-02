@@ -1,0 +1,31 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Restaurant posts</li>
+    </ol>
+  </nav>
+  <h3>Updates from your favourite restaurants</h3>
+  <p *ngIf="postList === undefined || postList.length === 0 ">Click <a [routerLink]="['/restaurant']">here</a> to see all restaurants that you can follow some</p>
+  <div class="row">    
+    <div class="col-sm-12 " *ngFor="let post of postList">
+      <br/>
+      <div class="card">
+        <div class="card-body">
+          <a href="/restaurant/{{post.restaurantId}}">
+            <span class="card-title"> {{post.restaurantName}}</span>
+          </a>
+          <br/>
+          <span class="">{{post.createdDate | date:'dd-MMM-yyyy HH:mm'}}</span>
+          <p class="card-text">{{post.content}}</p>
+          <div class="btn-group post-menu">
+            <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+              <span class="caret"></span>
+            </button>
+            <div class="dropdown-menu group-menu  dropdown-menu-right">
+              <a class="dropdown-item" (click)="unfollow(post.restaurantId)">Unfollow <b>{{post.restaurantName}}</b></a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>

@@ -1,0 +1,136 @@
+<!-- <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/restaurant">Restaurants</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">{{restaurant.name}}</li>
+  </ol>
+</nav> -->
+
+<div *ngIf="restaurant">
+  <div class="container jumbotron">
+    <form #myForm="ngForm" (ngSubmit)="onSubmit(myForm)">
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <div style="min-height: 220px;">
+            <img class="rounded img-responsive float-left current-img-file" src="{{restaurant.imageName}}" alt="{{restaurant.name}}"
+            style="max-width: 300px;" />
+          </div>
+          <!-- 
+              -->
+          <div>
+            <button class="btn btn-sm btn-secondary" title="Edit image" (click)="changeImage()" type="button">Select Image ...</button>
+          </div>
+          <div class="form-group d-none">
+            <label for="file">...</label>
+            <input type="file" class='input-file' (change)="handleFileInput($event.target.files)">
+          </div>
+        </div>
+        <div class="col-12 col-md-8">
+          <div class="form-group">
+            <label>Restaurant name</label>
+            <input class="col-12 form-control" [(ngModel)]="restaurant.name" name="name" required/>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" rows="5" required [(ngModel)]="restaurant.description" required name="description"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Link</label>
+            <input type="text" class="form-control" required [(ngModel)]="restaurant.link" required name="link" />
+          </div>
+          <div class="form-group">
+            <label>Address</label>
+            <input class="col-12 form-control" [(ngModel)]="restaurant.address" name="address" required/>
+          </div>
+          <div class="form-group">
+            <label>Zipcode</label>
+            <input class="col-12 form-control" [(ngModel)]="restaurant.zipcode" name="zipcode" required/>
+          </div>
+          <hr/>
+          <div class="form-group">
+            <div style="padding-bottom: 5px">
+              <label>Menu list</label>
+              <button type="button" class="btn btn-sm btn-secondary float-right" title="Add new menu" (click)="enableAddingForm(true)">+</button>
+            </div>
+            <ul class="list-group" *ngFor="let menu of restaurant.menus">
+              <li class="list-group-item justify-content-between menu-item">
+                {{menu.name}}
+                <span class="badge badge-secondary badge-pill rating-count d-none">X</span>
+                <button class="btn btn-secondary float-right" title="delete menu" (click)="confirmToDeleteMenu(menu)" type="button">x</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <input [disabled]="!myForm.valid" type="submit" value="Save" class="btn btn-sm btn-primary float-right" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!--Menu Edit modal-->
+<div class="modal fade" id="menuModalDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="!inEditMode">Add new menu</h5>
+        <h5 class="modal-title" *ngIf="inEditMode">Update menu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="form" (ngSubmit)="f.form.valid && saveNewMenu()" #f="ngForm" novalidate>
+          <div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+            <label for="name" class="col-4 col-form-label">Name</label>
+            <div class="col-8">
+              <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" required />
+              <div *ngIf="f.submitted && !name.valid" class="help-block">Menu name is required</div>
+            </div>
+          </div>
+          <div [hidden]="true" class="form-group row" [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+            <label for="description" class="col-4 col-form-label">Description</label>
+            <div class="col-8">
+              <input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" />
+              <div *ngIf="f.submitted && !description.valid" class="help-block">description is required</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col-8 offset-1">
+              <button *ngIf="inEditMode" [disabled]="loading" (click)="updateProduct()" class="btn btn-primary" type="button">Update</button>
+              <button *ngIf="!inEditMode" [disabled]="loading" class="btn btn-primary">Add</button>
+              <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+              />
+              <!-- <a class="btn btn-secondary" data-dismiss="modal">Cancel</a> -->
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Menu delete confirmation modal-->
+<div class="modal fade" id="deleteConfirmDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Do you really want to delete the menu?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-8 offset-2 text-center">
+          <button [disabled]="loading" class="btn btn-secondary" (click)="deleteMenu()">Delete</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
