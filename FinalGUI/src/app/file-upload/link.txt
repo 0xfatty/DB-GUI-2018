@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename
+https://nehalist.io/uploading-files-in-angular2/
