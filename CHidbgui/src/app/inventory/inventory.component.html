@@ -1,0 +1,151 @@
+﻿<div class="col-12">
+	<p *ngIf="products === undefined || products.length == 0">There is no product. Please click Add button to add new one.</p>
+	<div class="col-12 row">
+		<div class="col-8 float-left">
+			<h2> Product List</h2> 
+		</div>
+		<div class="col-4 float-right">
+			<button type="button" class="float-right btn btn-primary" (click)="enableAddingForm(true)">
+				<i class="fa-search"></i> Add
+			</button>
+		</div>
+	</div>
+	<div class="table-responsive"> 
+		<table class="table table-striped">
+			<thead>
+			  <tr>
+				<th>Product Name</th>
+				<th>Import Date</th>
+				<th>Expiration Date</th>
+				<th>Status</th>
+				<th>Total</th>
+				<th>Description</th>
+				<th>Action</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr *ngFor="let product of products">
+				<td>{{product.productName}}</td>
+				<td>{{product.importDate | date:'dd-MMM-yyyy'}}</td>
+				<td>{{product.expirationDate | date:'dd-MMM-yyyy'}}</td>
+				<td>{{product.status}}</td>
+				<td>{{product.total}}</td>
+				<td>{{product.description}}</td>
+				<td>
+					<a class="btn btn-link btn-sm" (click)="editProduct(product.id)">Edit</a>
+					<a class="btn btn-link btn-sm" (click)="confirmToDelete(product)">Del</a>
+				</td>
+			  </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" *ngIf="!inEditMode">Add New Product</h5>
+			<h5 class="modal-title" *ngIf="inEditMode">Update Product</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			
+			<div class="">
+				
+				<form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+					
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !productName.valid }">
+						<label for="productName" class="col-4 col-form-label">Product Name</label>
+						<div class="col-8">
+							<input type="text" class="form-control" name="productName" [(ngModel)]="model.productName" #productName="ngModel" required />
+							<div *ngIf="f.submitted && !productName.valid" class="help-block">Product Name is required</div>
+						</div>
+					</div>
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !importDate.valid }">
+						<label for="importDate" class="col-4 col-form-label">Import Date</label>
+						<div class="col-8">
+						<!-- 
+							<input type="date" class="form-control" name="importDate" [(ngModel)]="model.importDate" #importDate="ngModel" required /> 
+						-->
+							<input type="date" class="form-control" name="importDate" [ngModel] ="model.importDate | date:'yyyy-MM-dd'" (ngModelChange)="model.importDate = $event" #importDate="ngModel" required>
+							<div *ngIf="f.submitted && !importDate.valid" class="help-block">Import Date is required</div>
+						</div>
+					</div>
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !expirationDate.valid }">
+						<label for="expirationDate" class="col-4 col-form-label">Expiration Date</label>
+						<div class="col-8">
+							<!-- 
+							<input type="date" class="form-control" name="expirationDate" [(ngModel)]="model.expirationDate" #expirationDate="ngModel" required />
+							-->
+							<input type="date" class="form-control" name="expirationDate" [ngModel] ="model.expirationDate | date:'yyyy-MM-dd'" (ngModelChange)="model.expirationDate = $event" #expirationDate="ngModel" required>
+							<div *ngIf="f.submitted && !expirationDate.valid" class="help-block">Expiration Date is required</div>
+						</div>
+					</div>
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !status.valid }">
+						<label for="status" class="col-4 col-form-label">Status</label>
+						<div class="col-8">
+							<select class="form-control" name="status" [(ngModel)]="model.status" #status="ngModel" required (ngModelChange)="onChange($event)">
+							  <option *ngFor="let c of statusList" [ngValue]="c.id"> {{c.name}} </option>
+							</select>
+							<div *ngIf="f.submitted && !status.valid" class="help-block">Status is required</div>
+						</div>
+					</div>
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !total.valid }">
+						<label for="total" class="col-4 col-form-label">Total Items</label>
+						<div class="col-8">
+							<input type="text" class="form-control" name="total" [(ngModel)]="model.total" #total="ngModel" />
+							<div *ngIf="f.submitted && !total.valid" class="help-block">Total items is required</div>
+						</div>
+					</div>
+					<div class="form-group row" [ngClass]="{ 'has-error': f.submitted && !description.valid }">
+						<label for="description" class="col-4 col-form-label">Description</label>
+						<div class="col-8">
+							<input type="text" class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" required />
+							<div *ngIf="f.submitted && !description.valid" class="help-block">Product Description is required</div>
+						</div>
+					</div>
+					<input type="number" class="form-control d-none" name="restaurantId" [(ngModel)]="model.restaurantId" #restaurantId="ngModel" required />
+					
+					<div class="modal-footer">
+						<div class="col-8 offset-1">
+							<button *ngIf="inEditMode" [disabled]="loading" (click)="updateProduct()" class="btn btn-warning">Update</button>
+							<button *ngIf="!inEditMode" [disabled]="loading" class="btn btn-primary" type="button" (click)="inventoryAdd()" >Add</button>
+							<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			  
+			  
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+
+	<!--inventory delete confirmation modal-->
+<div class="modal fade" id="deleteConfirmDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Do you really want to delete this product?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-8 offset-2 text-center">
+            <button [disabled]="loading" class="btn btn-secondary" (click)="deleteInventory()">Delete</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

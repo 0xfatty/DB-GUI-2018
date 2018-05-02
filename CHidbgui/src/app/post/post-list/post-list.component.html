@@ -1,0 +1,104 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Restaurant posts</li>
+  </ol>
+</nav>
+
+<div class="row">
+  <div class="col-12 col-sm-12" *ngIf="restaurantId">
+    <div class="card">
+      <div class="card-header text-white bg-dark">
+        <b>Add new post</b>
+      </div>
+      <form #myForm="ngForm" (ngSubmit)="onSubmitAddNew(myForm)" class="alert alert-light" role="alert">
+        <div class="row">
+          <div class="form-group col-sm-12">
+            <label>Post content</label>
+            <textarea class="form-control" rows="5" required [(ngModel)]="newPost.content" name="comment"></textarea>
+          </div>
+          <div class="col-sm-12">
+            <input [disabled]="!myForm.valid" type="submit" value="Submit" class="btn btn-sm btn-primary" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-12 " *ngFor="let post of postList">
+    <br/>
+    <div class="card">
+      <div class="card-body">
+        <a href="/restaurant/{{post.restaurantId}}">
+          <span class="card-title"> {{post.restaurantName}}</span>
+        </a>
+        <br/>
+        <span class="">{{post.createdDate | date:'dd-MMM-yyyy HH:mm'}}</span>
+        <p class="card-text">{{post.content}}</p>
+        <div class="btn-group post-menu">
+          <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+            <span class="caret"></span>
+          </button>
+          <div class="dropdown-menu group-menu dropdown-menu-right">
+            <a class="dropdown-item" (click)="editPost(post)">Edit</a>
+            <a class="dropdown-item" (click)="confirmToDelete(post)">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--post Edit modal-->
+<div class="modal fade" id="postEditlDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form name="form" (ngSubmit)="frm.form.valid && saveEditPost()" #frm="ngForm" novalidate>
+            <div class="form-group row" [ngClass]="{ 'has-error': frm.submitted && !content.valid }">
+              <label for="content">Content</label>
+              <div class="col-12">
+                <textarea class="form-control" rows="5" name="content" [(ngModel)]="model.content" #content="ngModel" required ></textarea>
+                <div *ngIf="frm.submitted && !content.valid" class="help-block">content is required</div>
+              </div>
+            </div>
+            <div class="modal-footer text-center">
+              <div class="col-12">
+                <button [disabled]="loading" class="btn btn-primary" >Update</button>
+                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                />
+                <a class="btn btn-secondary" data-dismiss="modal">Cancel</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--post delete confirmation modal-->
+<div class="modal fade" id="deleteConfirmDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Do you really want to delete this post?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="col-8 offset-2 text-center">
+            <button [disabled]="loading" class="btn btn-secondary" (click)="deletePost()">Delete</button>
+            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <a class="btn btn-primary" data-dismiss="modal">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

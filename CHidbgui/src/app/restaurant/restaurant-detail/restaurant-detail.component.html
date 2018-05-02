@@ -1,0 +1,76 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink="/restaurant">Restaurants</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{restaurant.name}}</li>
+    </ol>
+</nav>
+<div *ngIf="restaurant">
+    <div class="container jumbotron">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="{{restaurant.imageName}}" alt="{{restaurant.name}}" style="max-width: 300px;" />
+            </div>
+            <div class="col-sm-8">
+                <h1>{{restaurant.name}}</h1>
+                <h3>
+                    <span class="badge badge-primary">{{restaurant.rate}}</span>
+                </h3>
+                <p>Link <a href="{{restaurant.link}}">{{restaurant.link}}</a></p>
+                <p>{{restaurant.description}}</p>
+
+                <ul class="list-group" *ngFor="let menu of restaurant.menus">
+                    <li class="list-group-item justify-content-between restaurant-menu-item">
+                        {{menu.name}}
+                        <img src='assets/imgs/hot-icon-300x300.gif' width="30" height="30" *ngIf="menu.isHot"
+                        />
+                        <br/>
+                        <button class="btn btn-link float-left reset-padding rate-button" (click)="openRatingDialog(menu)" *ngIf="!menu.alreadyRate">Rate</button>
+                        <div class="float-right rating-stars">
+                            <span class="badge badge-default badge-pill rating-count d-none">(0)</span>
+                            <span class="stars float-right">
+                                <span *ngFor="let level of [1,2,3,4,5]" [class]="(menu.rate >= level ? 'full-star': (menu.rate > level-1 ?'half-star' : 'empty-star'))">
+                                </span>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-check has-success" *ngIf="!wasUserHere">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" id="chkWereHere" value="1" (change)="confimrVisitAlready()"> You were here?
+            </label>
+        </div>
+    </div>
+
+    <app-restaurant-review [reviews]="restaurant.reviews" [restaurantId]="id">
+    </app-restaurant-review>
+</div>
+
+<div class="modal fade" id="ratingDlg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Give us your rating on this menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mx-auto" style="display:table;margin:0 auto;">
+                    <span class="stars">
+                    <span *ngFor="let level of [1,2,3,4,5]"
+                            [class]="(curMenuRatingValue >= level ? 'full-star': 'empty-star')" (click)="onSelect(level)">
+                    </span>
+                    </span>
+                </div>
+                <br/>
+                <button class="btn btn-primary" style="display:table;margin:0 auto;" (click)="rateMenu()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

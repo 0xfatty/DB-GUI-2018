@@ -1,0 +1,12 @@
+.menu-item button {
+    border: none;
+    padding: 0px 9px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+    font-family: Arial;
+}
+
+.current-img-file{
+    padding-bottom: 5px;
+}

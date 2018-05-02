@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+.main-content{
+	padding-top: 30px;
+	min-height: 70vh;
+}
+.main-content  ul.nav-tabs li.first-item{
+	padding-left: 10px;
+}
+.table thead th{
+	border-bottom: none;
+}
+.table td{
+	border-top: none;
+}
+.tab-content {
+	border-left: 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+	padding: 20px;
+	min-height: 200px
+}
+.reset-padding {
+	padding-left: 0;
+	padding-right: 0;
+}
