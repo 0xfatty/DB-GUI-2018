@@ -1,0 +1,14 @@
+.stars {
+    font-size:1.5rem;
+}
+
+.full-star:after {
+    content: "\2605";
+    color: #ff8a00;
+}
+.half-star:after {
+  content: "\E6A9";
+}
+.empty-star:after{
+    content: "\2606";
+}

@@ -1,0 +1,32 @@
+    <!-- Container for sidebar(s) + page content -->
+    <ng-sidebar-container>
+
+      <!-- A sidebar -->
+      <ng-sidebar [(opened)]="_opened">
+        <p>Sidebar contents</p>
+        <div class="jumbotron">
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            <alert></alert>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+<!-- credits -->
+<div class="text-center">
+    <p>
+        <a href="http://cse3345" target="_top">GUI 2018</a>
+    </p>
+    <p>
+        <a href="http://cse3345" target="_top">CSE 3345</a>
+    </p>
+</div>
+      </ng-sidebar>
+
+      <!-- Page content -->
+      <div ng-sidebar-content>
+        <button (click)="_toggleSidebar()">Toggle sidebar</button>
+      </div>
+
+    </ng-sidebar-container>

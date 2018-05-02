@@ -1,0 +1,36 @@
+.stars {
+    font-size:1.5rem;
+}
+
+.full-star:after {
+    content: "\2605";
+    color: #ff8a00;
+}
+
+.half-star:after {
+    content: "\2605";
+    color: #ff8a00;
+}
+
+.empty-star:after{
+    content: "\2606";
+}
+
+.rating-count{
+    color: #ddd;
+    right: 154px;
+    top: 28px;
+    position: absolute;
+}
+.restaurant-menu-item img{
+    margin-top: -10px;
+}
+
+.restaurant-menu-item .rating-stars{
+    margin-top: -39px;    
+}
+.rate-button{
+    position: absolute;
+    top: 17px;
+    right: 67px;
+}
